@@ -13,7 +13,7 @@
 			<div class="banner">
 
 			<h2>
-			<a href="index.html"><?php echo $judul?></a>
+			<a href="<?php echo base_url();?>"><?php echo $judul?></a>
 			<i class="fa fa-angle-right"></i>
 			<span><?php echo $sub_judul?></span>
 			</h2>

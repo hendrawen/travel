@@ -21,10 +21,11 @@
             <tr>
                 <th>No</th>
 		<th>Nama Paket</th>
-		<th>Gambar</th>
 		<th>Harga</th>
 		<th>Keterangan</th>
 		<th>Id Jenis Paket</th>
+		<th>Gambar</th>
+		<th>Tanggal</th>
 		
             </tr><?php
             foreach ($paket_data as $paket)
@@ -33,10 +34,11 @@
                 <tr>
 		      <td><?php echo ++$start ?></td>
 		      <td><?php echo $paket->nama_paket ?></td>
-		      <td><?php echo $paket->gambar ?></td>
 		      <td><?php echo $paket->harga ?></td>
 		      <td><?php echo $paket->keterangan ?></td>
-		      <td><?php echo $paket->id_jenis_paket ?></td>	
+		      <td><?php echo $paket->id_jenis_paket ?></td>
+		      <td><?php echo $paket->gambar ?></td>
+		      <td><?php echo $paket->tanggal ?></td>	
                 </tr>
                 <?php
             }

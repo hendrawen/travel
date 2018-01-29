@@ -1,28 +1,52 @@
-
-        <div class="row" style="margin-bottom: 15px; margin-left: 5px">
+<style>
+    .dataTables_wrapper {
+        min-height: 500px
+    }
+    
+    .dataTables_processing {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        margin-left: -50%;
+        margin-top: -25px;
+        padding-top: 20px;
+        text-align: center;
+        font-size: 1.2em;
+        color:grey;
+    }
+    body{
+        padding: 15px;
+    }
+</style>
+<div class="blank">
+    
+    <div class="blank-page">
+        <div class="row" style="margin-bottom: 10px">
             <div class="col-md-4">
-                <h2 style="margin-top:10px">Paket List</h2>
+                <h2 style="margin-top:0px">Paket List</h2>
             </div>
             <div class="col-md-4 text-center">
                 <div style="margin-top: 4px"  id="message">
                     <?php echo $this->session->userdata('message') <> '' ? $this->session->userdata('message') : ''; ?>
                 </div>
             </div>
-            <div class="col-md-4 text-right" style="margin-top:10px;">
+            <div class="col-md-4 text-right">
                 <?php echo anchor(site_url('paket/create'), 'Create', 'class="btn btn-primary"'); ?>
         		<?php echo anchor(site_url('paket/excel'), 'Excel', 'class="btn btn-primary"'); ?>
         		<?php echo anchor(site_url('paket/word'), 'Word', 'class="btn btn-primary"'); ?>
-    	    </div>
+	    </div>
         </div>
-        <table class="table table-bordered table-striped" id="mytable" style="margin-left:5px">
+        <table class="table table-bordered table-striped" id="mytable">
             <thead>
                 <tr>
                     <th width="80px">No</th>
 		    <th>Nama Paket</th>
-		    <th>Gambar</th>
 		    <th>Harga</th>
 		    <th>Keterangan</th>
 		    <th>Id Jenis Paket</th>
+		    <th>Gambar</th>
+		    <th>Tanggal</th>
 		    <th width="200px">Action</th>
                 </tr>
             </thead>
@@ -67,7 +91,19 @@
                         {
                             "data": "id_paket",
                             "orderable": false
-                        },{"data": "nama_paket"},{"data": "gambar"},{"data": "harga"},{"data": "keterangan"},{"data": "id_jenis_paket"},
+                        }, 
+                        {"data": "nama_paket"},
+                        {"data": "harga"},
+                        {"data": "keterangan"},
+                        // {"data": "jenis_paket"},
+                        {"data": "id_jenis_paket"},
+                        // {
+                        //     "render": function (data, type, JsonResultRow, meta) {
+                        //         return '<img src="404.png" class="img-thumbnail" alt="Cinque Terre" width="304" height="236">';
+                        //     }
+                        // }
+                        {"data": "gambar"},
+                        {"data": "tanggal"},
                         {
                             "data" : "action",
                             "orderable": false,
@@ -79,9 +115,11 @@
                         var info = this.fnPagingInfo();
                         var page = info.iPage;
                         var length = info.iLength;
-                        var index = page * length + (iDisplayIndex + 1);
+                        var index  = page * length + (iDisplayIndex + 1);
                         $('td:eq(0)', row).html(index);
                     }
                 });
             });
         </script>
+</div>
+</div>
