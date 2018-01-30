@@ -14,8 +14,9 @@
 	    <tr><td>Keterangan</td><td><?php echo $keterangan; ?></td></tr>
 	    <tr><td>About Us</td><td><?php echo $about_us; ?></td></tr>
 	    <tr><td>Pemilik Perusahaan</td><td><?php echo $pemilik_perusahaan; ?></td></tr>
+      <tr><td>Youtube</td><td><?php echo $video; ?></td></tr>
 	    <tr><td>Tanggal</td><td><?php echo $tanggal; ?></td></tr>
-	    <tr><td></td><td><a href="<?php echo site_url('pengaturan') ?>" class="btn btn-default">Cancel</a></td></tr>
+	    <tr><td></td><td><a href="<?php echo site_url('pengaturan') ?>" class="btn btn-danger">Cancel</a></td></tr>
 	</table>
     </div>
 </div>

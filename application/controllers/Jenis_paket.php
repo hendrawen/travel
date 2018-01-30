@@ -8,12 +8,12 @@ class Jenis_paket extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        if ($this->session->userdata('logged') <> 1) 
+        if ($this->session->userdata('logged') <> 1)
         {
             redirect(site_url('auth'));
         }
         $this->load->model('Jenis_paket_model');
-        $this->load->library('form_validation');        
+        $this->load->library('form_validation');
 	$this->load->library('datatables');
     }
 
@@ -24,14 +24,14 @@ class Jenis_paket extends CI_Controller
         $data['sub_judul']  = 'Jenis Paket';
         $data['content']    = 'jenis_paket/jenis_paket_list';
         $this->load->view('dashboard', $data);
-    } 
-    
+    }
+
     public function json() {
         header('Content-Type: application/json');
         echo $this->Jenis_paket_model->json();
     }
 
-    public function read($id) 
+    public function read($id)
     {
         $row = $this->Jenis_paket_model->get_by_id($id);
         if ($row) {
@@ -52,7 +52,7 @@ class Jenis_paket extends CI_Controller
         }
     }
 
-    public function create() 
+    public function create()
     {
         $data = array(
             'button' => 'Create',
@@ -68,8 +68,8 @@ class Jenis_paket extends CI_Controller
         $data['content']    = 'jenis_paket/jenis_paket_form';
         $this->load->view('dashboard', $data);
     }
-    
-    public function create_action() 
+
+    public function create_action()
     {
         $this->_rules();
         $this->load->helper('date');
@@ -83,29 +83,38 @@ class Jenis_paket extends CI_Controller
         $config['allowed_types']    = 'gif|jpg|png|jpeg|bmp';
         $config['max_size']         = '50000';
         $config['remove_space']     = TRUE;
-      
+
         $this->load->library('upload', $config); // Load konfigurasi uploadnya
         $this->upload->initialize($config);
         $this->upload->do_upload('gambar');
 
         $result = $this->upload->data();
-     
+        $config['image_library']    ='gd2';
+        $config['source_image']     ='./assets2/images/'.$result['file_name'];
+        $config['create_thumb']     = FALSE;
+        $config['maintain_ratio']   = FALSE;
+        $config['width']            = 340;
+        $config['height']           = 230;
+        $config['new_image']        = './assets2/images/'.$result['file_name'];
+        $this->load->library('image_lib', $config);
+        $this->image_lib->resize();
+
         $gambar = $result['file_name'];
+        //print_r($gambar);
+        $data = array(
+            'id_jenis_paket' => $this->Jenis_paket_model->buat_kode(),
+            'jenis_paket' => $this->input->post('jenis_paket',TRUE),
+            'gambar' => $gambar,
+              //'tanggal' => mdate($datestring, $time),
+         );
 
-            $data = array(
-        'id_jenis_paket' => $this->Jenis_paket_model->buat_kode(),
-		'jenis_paket' => $this->input->post('jenis_paket',TRUE),
-        'gambar' => $gambar,
-		//'tanggal' => mdate($datestring, $time),
-	    );
-
-            $this->Jenis_paket_model->insert($data);
-            $this->session->set_flashdata('message', 'Create Record Success');
-            redirect(site_url('jenis_paket'));
+        $this->Jenis_paket_model->insert($data);
+        $this->session->set_flashdata('message', 'Create Record Success');
+        redirect(site_url('jenis_paket'));
         }
     }
-    
-    public function update($id) 
+
+    public function update($id)
     {
         $row = $this->Jenis_paket_model->get_by_id($id);
 
@@ -129,14 +138,14 @@ class Jenis_paket extends CI_Controller
             redirect(site_url('jenis_paket'));
         }
     }
-    
-    public function update_action() 
+
+    public function update_action()
     {
         $this->_rules();
         $this->load->helper('date');
         $datestring = '%Y-%m-%d %h:%i:%s';
         $time = time();
-        
+
         if ($this->form_validation->run() == FALSE) {
             /*$this->update($this->input->post('id_jenis_paket', TRUE));*/
             $this->index();
@@ -146,12 +155,22 @@ class Jenis_paket extends CI_Controller
             $config['allowed_types']    = 'gif|jpg|png|jpeg|bmp';
             $config['max_size']         = '50000';
             $config['remove_space']     = TRUE;
-          
+
             $this->load->library('upload', $config); // Load konfigurasi uploadnya
             $this->upload->initialize($config);
             $this->upload->do_upload('gambar');
-
             $result = $this->upload->data();
+            
+            $config['image_library']    ='gd2';
+            $config['source_image']     ='./assets2/images/'.$result['file_name'];
+            $config['create_thumb']     = FALSE;
+            $config['maintain_ratio']   = FALSE;
+            $config['width']            = 340;
+            $config['height']           = 230;
+            $config['new_image']        = './assets2/images/'.$result['file_name'];
+            $this->load->library('image_lib', $config);
+            $this->image_lib->resize();
+
             $gambar = $result['file_name'];
 
             $id_jenis_paket = $this->input->post('id_jenis_paket',TRUE);
@@ -173,8 +192,8 @@ class Jenis_paket extends CI_Controller
             redirect(site_url('jenis_paket'));
         }
     }
-    
-    public function delete($id) 
+
+    public function delete($id)
     {
         $row = $this->Jenis_paket_model->get_by_id($id);
 
@@ -188,7 +207,7 @@ class Jenis_paket extends CI_Controller
         }
     }
 
-    public function _rules() 
+    public function _rules()
     {
 	$this->form_validation->set_rules('jenis_paket', 'jenis paket', 'trim|required');
 	// $this->form_validation->set_rules('tanggal', 'tanggal', 'trim|required');
@@ -247,7 +266,7 @@ class Jenis_paket extends CI_Controller
             'jenis_paket_data' => $this->Jenis_paket_model->get_all(),
             'start' => 0
         );
-        
+
         $this->load->view('jenis_paket/jenis_paket_doc',$data);
     }
 

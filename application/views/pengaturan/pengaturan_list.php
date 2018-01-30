@@ -3,7 +3,7 @@
     .dataTables_wrapper {
         min-height: 500px
     }
-    
+
     .dataTables_processing {
         position: absolute;
         top: 50%;
@@ -46,7 +46,7 @@
             <th>Manajer Perusahaan</th>
             <th>Email</th>
             <th>Website</th>
-            <th>Tanggal</th>
+            <th>Youtube</th>
 		    <!-- <th>Program Promo</th> -->
             <!-- <th>Kerjasama</th> -->
         <!--     <th>Phone1</th>
@@ -57,7 +57,7 @@
 		    <th width="200px">Action</th>
                 </tr>
             </thead>
-	    
+
         </table>
         <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
         <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
@@ -111,7 +111,7 @@
                         // {"data": "phone3"},
                         // {"data": "keterangan"},
                         // {"data": "about_us"},
-                        {"data": "tanggal"},
+                        {"data": "video"},
                         {
                             "data" : "action",
                             "orderable": false,

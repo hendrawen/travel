@@ -1,7 +1,8 @@
 <div class="blank">
    <div class="blank-page">
         <h2 style="margin-top:0px">Pengaturan <?php echo $button ?></h2>
-        <form action="<?php echo $action; ?>" method="post">
+        <!-- <form action="<?php echo $action; ?>" method="post"> -->
+        <?php echo form_open_multipart($action);?>
 	    <div class="form-group">
             <label for="program_promo">Program Promo <?php echo form_error('program_promo') ?></label>
             <!-- <textarea class="form-control" rows="3" name="program_promo" id="program_promo" placeholder="Program Promo"><?php echo $program_promo; ?></textarea> -->
@@ -55,8 +56,12 @@
             <label for="timestamp">Tanggal <?php echo form_error('tanggal') ?></label>
             <input type="text" class="form-control" name="tanggal" id="tanggal" placeholder="Tanggal" value="<?php echo $tanggal; ?>" />
         </div> -->
-	    <input type="hidden" name="id" value="<?php echo $id; ?>" /> 
-	    <button type="submit" class="btn btn-primary"><?php echo $button ?></button> 
+        <div class="form-group">
+              <label for="script_widget"> Script Video</label>
+              <textarea class="form-control" id="video" name="video" placeholder="Script video Youtube bisa di copy-paste-kan disini" cols="4" rows="4" required ><?php echo $video; ?></textarea >
+          </div>
+	    <input type="hidden" name="id" value="<?php echo $id; ?>" />
+	    <button type="submit" class="btn btn-primary"><?php echo $button ?></button>
 	    <a href="<?php echo site_url('pengaturan') ?>" class="btn btn-default">Cancel</a>
 	</form>
     </div>

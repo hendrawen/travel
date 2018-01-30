@@ -8,12 +8,12 @@ class Admin extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        if ($this->session->userdata('logged') <> 1) 
+        if ($this->session->userdata('logged') <> 1)
         {
             redirect(site_url('auth'));
         }
         $this->load->model('Admin_model');
-        $this->load->library('form_validation');        
+        $this->load->library('form_validation');
 	    $this->load->library('datatables');
     }
 
@@ -24,14 +24,14 @@ class Admin extends CI_Controller
         $data['sub_judul']  = 'Admin';
         $data['content']    = 'admin/admin_list';
         $this->load->view('dashboard', $data);
-    } 
-    
+    }
+
     public function json() {
         header('Content-Type: application/json');
         echo $this->Admin_model->json();
     }
 
-    public function read($id) 
+    public function read($id)
     {
         $row = $this->Admin_model->get_by_id($id);
         if ($row) {
@@ -53,7 +53,7 @@ class Admin extends CI_Controller
         }
     }
 
-    public function create() 
+    public function create()
     {
         $data = array(
             'button' => 'Create',
@@ -70,8 +70,8 @@ class Admin extends CI_Controller
         $data['content']    = 'admin/admin_form';
         $this->load->view('dashboard', $data);
     }
-    
-    public function create_action() 
+
+    public function create_action()
     {
         $this->load->helper('date');
         $datestring = '%Y-%m-%d %h:%i:%s';
@@ -93,8 +93,8 @@ class Admin extends CI_Controller
             redirect(site_url('admin'));
         }
     }
-    
-    public function update($id) 
+
+    public function update($id)
     {
         $row = $this->Admin_model->get_by_id($id);
 
@@ -118,8 +118,8 @@ class Admin extends CI_Controller
             redirect(site_url('admin'));
         }
     }
-    
-    public function update_action() 
+
+    public function update_action()
     {
         $this->_rules();
         $this->load->helper('date');
@@ -140,8 +140,8 @@ class Admin extends CI_Controller
             redirect(site_url('admin'));
         }
     }
-    
-    public function delete($id) 
+
+    public function delete($id)
     {
         $row = $this->Admin_model->get_by_id($id);
 
@@ -155,7 +155,7 @@ class Admin extends CI_Controller
         }
     }
 
-    public function _rules() 
+    public function _rules()
     {
 	$this->form_validation->set_rules('username', 'username', 'trim|required');
 	$this->form_validation->set_rules('password', 'password', 'trim|required');
@@ -220,7 +220,7 @@ class Admin extends CI_Controller
             'admin_data' => $this->Admin_model->get_all(),
             'start' => 0
         );
-        
+
         $this->load->view('admin/admin_doc',$data);
     }
 

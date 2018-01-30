@@ -8,12 +8,12 @@ class Pengaturan extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        if ($this->session->userdata('logged') <> 1) 
+        if ($this->session->userdata('logged') <> 1)
         {
             redirect(site_url('auth'));
         }
         $this->load->model('Pengaturan_model');
-        $this->load->library('form_validation');        
+        $this->load->library('form_validation');
 	   $this->load->library('datatables');
     }
 
@@ -24,14 +24,14 @@ class Pengaturan extends CI_Controller
         $data['sub_judul']  = 'Pengaturan';
         $data['content']    = 'pengaturan/pengaturan_list';
         $this->load->view('dashboard',$data);
-    } 
-    
+    }
+
     public function json() {
         header('Content-Type: application/json');
         echo $this->Pengaturan_model->json();
     }
 
-    public function read($id) 
+    public function read($id)
     {
         $row = $this->Pengaturan_model->get_by_id($id);
         if ($row) {
@@ -50,6 +50,7 @@ class Pengaturan extends CI_Controller
 		'about_us' => $row->about_us,
 		'pemilik_perusahaan' => $row->pemilik_perusahaan,
 		'tanggal' => $row->tanggal,
+    'video' => $row->video,
 	    );
             $data['title']      = 'Admin Geo Travel Lombok';
             $data['judul']      = 'Dashboard';
@@ -62,7 +63,7 @@ class Pengaturan extends CI_Controller
         }
     }
 
-    public function create() 
+    public function create()
     {
         $data = array(
             'button' => 'Create',
@@ -80,7 +81,7 @@ class Pengaturan extends CI_Controller
 	    'keterangan' => set_value('keterangan'),
 	    'about_us' => set_value('about_us'),
 	    'pemilik_perusahaan' => set_value('pemilik_perusahaan'),
-	    'tanggal' => set_value('tanggal'),
+	    'video' => set_value('video'),
 	);
         $data['title']      = 'Admin Geo Travel Lombok';
         $data['judul']      = 'Dashboard';
@@ -88,8 +89,8 @@ class Pengaturan extends CI_Controller
         $data['content']    = 'pengaturan/pengaturan_form';
         $this->load->view('dashboard',$data);
     }
-    
-    public function create_action() 
+
+    public function create_action()
     {
         $this->_rules();
         $this->load->helper('date');
@@ -111,7 +112,8 @@ class Pengaturan extends CI_Controller
 		'keterangan' => $this->input->post('keterangan',TRUE),
 		'about_us' => $this->input->post('about_us',TRUE),
 		'pemilik_perusahaan' => $this->input->post('pemilik_perusahaan',TRUE),
-		'tanggal' => mdate($datestring, $time),
+    'video' => $this->input->post('video',TRUE),
+		//'tanggal' => mdate($datestring, $time),
 	    );
 
             $this->Pengaturan_model->insert($data);
@@ -119,8 +121,8 @@ class Pengaturan extends CI_Controller
             redirect(site_url('pengaturan'));
         }
     }
-    
-    public function update($id) 
+
+    public function update($id)
     {
         $row = $this->Pengaturan_model->get_by_id($id);
 
@@ -141,7 +143,7 @@ class Pengaturan extends CI_Controller
 		'keterangan' => set_value('keterangan', $row->keterangan),
 		'about_us' => set_value('about_us', $row->about_us),
 		'pemilik_perusahaan' => set_value('pemilik_perusahaan', $row->pemilik_perusahaan),
-		'tanggal' => set_value('tanggal', $row->tanggal),
+		'video' => set_value('video', $row->video),
 	    );
             $data['title']      = 'Admin Geo Travel Lombok';
             $data['judul']      = 'Dashboard';
@@ -153,8 +155,8 @@ class Pengaturan extends CI_Controller
             redirect(site_url('pengaturan'));
         }
     }
-    
-    public function update_action() 
+
+    public function update_action()
     {
         $this->_rules();
         $this->load->helper('date');
@@ -177,7 +179,8 @@ class Pengaturan extends CI_Controller
 		'keterangan' => $this->input->post('keterangan',TRUE),
 		'about_us' => $this->input->post('about_us',TRUE),
 		'pemilik_perusahaan' => $this->input->post('pemilik_perusahaan',TRUE),
-		'tanggal' => mdate($datestring, $time),
+    'video' => $this->input->post('video',TRUE),
+		// 'tanggal' => mdate($datestring, $time),
 	    );
 
             $this->Pengaturan_model->update($this->input->post('id', TRUE), $data);
@@ -185,8 +188,8 @@ class Pengaturan extends CI_Controller
             redirect(site_url('pengaturan'));
         }
     }
-    
-    public function delete($id) 
+
+    public function delete($id)
     {
         $row = $this->Pengaturan_model->get_by_id($id);
 
@@ -200,7 +203,7 @@ class Pengaturan extends CI_Controller
         }
     }
 
-    public function _rules() 
+    public function _rules()
     {
 	$this->form_validation->set_rules('program_promo', 'program promo', 'trim|required');
 	$this->form_validation->set_rules('kerjasama', 'kerjasama', 'trim|required');
@@ -292,7 +295,7 @@ class Pengaturan extends CI_Controller
             'pengaturan_data' => $this->Pengaturan_model->get_all(),
             'start' => 0
         );
-        
+
         $this->load->view('pengaturan/pengaturan_doc',$data);
     }
 

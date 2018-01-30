@@ -17,7 +17,7 @@ class Pengaturan_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('id,program_promo,kerjasama,nama_perusahaan,manajer_perusahaan,email,website,phone1,phone2,phone3,keterangan,about_us,pemilik_perusahaan,tanggal');
+        $this->datatables->select('id,program_promo,kerjasama,nama_perusahaan,manajer_perusahaan,email,website,phone1,phone2,phone3,keterangan,about_us,pemilik_perusahaan,tanggal,video');
         $this->datatables->from('pengaturan');
         //add this line for join
         //$this->datatables->join('table2', 'pengaturan.field = table2.field');
@@ -38,7 +38,7 @@ class Pengaturan_model extends CI_Model
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
-    
+
     // get total rows
     function total_rows($q = NULL) {
         $this->db->like('id', $q);
@@ -55,6 +55,7 @@ class Pengaturan_model extends CI_Model
 	$this->db->or_like('about_us', $q);
 	$this->db->or_like('pemilik_perusahaan', $q);
 	$this->db->or_like('tanggal', $q);
+  $this->db->or_like('video', $q);
 	$this->db->from($this->table);
         return $this->db->count_all_results();
     }
@@ -76,6 +77,7 @@ class Pengaturan_model extends CI_Model
 	$this->db->or_like('about_us', $q);
 	$this->db->or_like('pemilik_perusahaan', $q);
 	$this->db->or_like('tanggal', $q);
+  $this->db->or_like('video', $q);
 	$this->db->limit($limit, $start);
         return $this->db->get($this->table)->result();
     }
